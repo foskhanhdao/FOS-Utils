@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FOS-Utils", "FOS-Utils.csproj", "{05CD2BC3-5C75-4C7B-869A-182B4227DC7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFos", "..\TestFos\TestFos.csproj", "{F854F3AC-564D-45AB-8D1C-6283703C559E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05CD2BC3-5C75-4C7B-869A-182B4227DC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CD2BC3-5C75-4C7B-869A-182B4227DC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CD2BC3-5C75-4C7B-869A-182B4227DC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CD2BC3-5C75-4C7B-869A-182B4227DC7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F854F3AC-564D-45AB-8D1C-6283703C559E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F854F3AC-564D-45AB-8D1C-6283703C559E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F854F3AC-564D-45AB-8D1C-6283703C559E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F854F3AC-564D-45AB-8D1C-6283703C559E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
