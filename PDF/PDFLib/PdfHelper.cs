@@ -248,6 +248,57 @@ namespace FOS_Utils.PDF.PDFLib
                 lsLine.Add(line4);
 
         }
+        public static void PrintBorderLabel(FPdfLabel tb, PagePdf page, FosPoint rootPoint)
+        {
+            if (tb.IsShowLineTop)
+            {
+                FosLine lineTop = new FosLine();
+                lineTop.PointStart = new FosPoint(rootPoint.XPoint + tb.Location.X, rootPoint.YPoint + tb.Location.Y);
+                lineTop.PointDest = new FosPoint(rootPoint.XPoint + tb.Location.X + tb.Width, rootPoint.YPoint + tb.Location.Y);
+                if (tb.LineStyleTop == System.Drawing.Drawing2D.DashStyle.Dot)
+                {
+                    lineTop.LineStyle = LineStyle.Dot;
+                }
+                if (CurPage == 1)
+                    lsLine.Add(lineTop);
+            }
+            if (tb.IsShowLineBottom)
+            {
+                FosLine lineBottom = new FosLine();
+                lineBottom.PointStart = new FosPoint(rootPoint.XPoint + tb.Location.X, rootPoint.YPoint + tb.Location.Y + tb.Height);
+                lineBottom.PointDest = new FosPoint(rootPoint.XPoint + tb.Location.X + tb.Width, rootPoint.YPoint + tb.Location.Y + tb.Height);
+                if (tb.LineStyleBottom == System.Drawing.Drawing2D.DashStyle.Dot)
+                {
+                    lineBottom.LineStyle = LineStyle.Dot;
+                }
+                if (CurPage == 1)
+                    lsLine.Add(lineBottom);
+            }
+            if (tb.IsShowLineLeft)
+            {
+                FosLine lineLeft = new FosLine();
+                lineLeft.PointStart = new FosPoint(rootPoint.XPoint + tb.Location.X, rootPoint.YPoint + tb.Location.Y);
+                lineLeft.PointDest = new FosPoint(rootPoint.XPoint + tb.Location.X, rootPoint.YPoint + tb.Location.Y + tb.Height);
+                if (tb.LineStyleLeft == System.Drawing.Drawing2D.DashStyle.Dot)
+                {
+                    lineLeft.LineStyle = LineStyle.Dot;
+                }
+                if (CurPage == 1)
+                    lsLine.Add(lineLeft);
+            }
+            if (tb.IsShowLineRight)
+            {
+                FosLine lineRight = new FosLine();
+                lineRight.PointStart = new FosPoint(rootPoint.XPoint + tb.Location.X + tb.Width, rootPoint.YPoint + tb.Location.Y);
+                lineRight.PointDest = new FosPoint(rootPoint.XPoint + tb.Location.X + tb.Width, rootPoint.YPoint + tb.Location.Y + tb.Height);
+                if (tb.LineStyleRight == System.Drawing.Drawing2D.DashStyle.Dot)
+                {
+                    lineRight.LineStyle = LineStyle.Dot;
+                }
+                if (CurPage == 1)
+                    lsLine.Add(lineRight);
+            }
+        }
         #endregion
         #region PDFFun
         /// <summary>
@@ -442,8 +493,8 @@ namespace FOS_Utils.PDF.PDFLib
         public static void PrintPdfString(FPdfLabel FPdfLabel, PagePdf page, FosPoint rootPoint, int curPage)
         {
             //inborder
-            if (FPdfLabel.BorderStyle == BorderStyle.FixedSingle)
-                PrintBorderForControl(FPdfLabel, page, rootPoint);
+
+            PrintBorderLabel(FPdfLabel, page, rootPoint);
             //khoi tao bien de in text  
             PdfContentByte cb = writer.DirectContent;
             BaseFont bf;
@@ -505,7 +556,7 @@ namespace FOS_Utils.PDF.PDFLib
                     cb.SetLineDash(1f, 1f);
                     break;
                 case LineStyle.Nomar:
-                    cb.SetLineDash(0f, 0f);
+                    cb.SetLineCap(1);
                     break;
             }
 

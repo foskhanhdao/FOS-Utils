@@ -1,0 +1,9 @@
+D:\GitHupData\FOS-Utils\bin\Debug\FOS-Utils.dll
+D:\GitHupData\FOS-Utils\bin\Debug\FOS-Utils.pdb
+D:\GitHupData\FOS-Utils\bin\Debug\itextsharp.dll
+D:\GitHupData\FOS-Utils\obj\Debug\ResolveAssemblyReference.cache
+D:\GitHupData\FOS-Utils\obj\Debug\FOS_Utils.FInputControl.resources
+D:\GitHupData\FOS-Utils\obj\Debug\FOS_Utils.FNumberTextBox.resources
+D:\GitHupData\FOS-Utils\obj\Debug\FOS-Utils.csproj.GenerateResource.Cache
+D:\GitHupData\FOS-Utils\obj\Debug\FOS-Utils.dll
+D:\GitHupData\FOS-Utils\obj\Debug\FOS-Utils.pdb

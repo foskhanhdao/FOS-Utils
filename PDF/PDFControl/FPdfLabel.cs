@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace FOS_Utils.PDF.PDFControl
 {
-    public class FPdfLabel : Label
+    public class FPdfLabel : FLabelLine
     {
         FPdfProperties fPdfProperties = new FPdfProperties();
 
