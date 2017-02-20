@@ -48,7 +48,8 @@ namespace FOS_Utils.PDF.PDFLib
             int height = control.Size.Height;
             int size = (int)control.Font.Size;
             int xPoint = control.Location.X + 4;
-            int yPoint = control.Location.Y + 6 + size;
+            //int yPoint = control.Location.Y + 6 + size;
+            int yPoint = control.Location.Y + size + (control.Size.Height-size)/2;
             FosPoint point = new FosPoint(xPoint, yPoint);
             return point;
         }
