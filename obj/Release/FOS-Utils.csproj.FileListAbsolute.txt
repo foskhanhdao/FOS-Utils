@@ -6,3 +6,11 @@ C:\Users\dao\Desktop\FOS-Utils\FOS-Utils\obj\Release\FOS_Utils.FNumberTextBox.re
 C:\Users\dao\Desktop\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.csproj.GenerateResource.Cache
 C:\Users\dao\Desktop\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.dll
 C:\Users\dao\Desktop\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.pdb
+D:\Work\FOS-Utils\FOS-Utils\bin\Release\FOS-Utils.dll
+D:\Work\FOS-Utils\FOS-Utils\bin\Release\FOS-Utils.pdb
+D:\Work\FOS-Utils\FOS-Utils\obj\Release\ResolveAssemblyReference.cache
+D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS_Utils.FInputControl.resources
+D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS_Utils.FNumberTextBox.resources
+D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.csproj.GenerateResource.Cache
+D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.dll
+D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.pdb
