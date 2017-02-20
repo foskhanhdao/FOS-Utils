@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -176,10 +180,20 @@
     <Compile Include="FYearMonth.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PDF\PDFControl\FPdfLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFControl\FPdfPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PDF\PDFControl\FPdfProperties.cs" />
     <Compile Include="PDF\PDFControl\FPdfText.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PDF\PDFLib\FosLine.cs" />
+    <Compile Include="PDF\PDFLib\FosPoint.cs" />
+    <Compile Include="PDF\PDFLib\PagePdf.cs" />
+    <Compile Include="PDF\PDFLib\PdfHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>

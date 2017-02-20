@@ -6,10 +6,10 @@ using System.Windows.Forms;
 
 namespace FOS_Utils.PDF.PDFControl
 {
-    public class FPdfText : TextBox
+    public class FPdfLabel : Label
     {
-
         FPdfProperties fPdfProperties = new FPdfProperties();
+
         public FPdfProperties FPdfProperties
         {
             get { return fPdfProperties; }

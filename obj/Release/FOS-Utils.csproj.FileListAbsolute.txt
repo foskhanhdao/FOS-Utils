@@ -14,3 +14,4 @@ D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS_Utils.FNumberTextBox.resources
 D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.csproj.GenerateResource.Cache
 D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.dll
 D:\Work\FOS-Utils\FOS-Utils\obj\Release\FOS-Utils.pdb
+D:\Work\FOS-Utils\FOS-Utils\bin\Release\itextsharp.dll
