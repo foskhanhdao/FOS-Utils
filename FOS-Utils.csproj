@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{05CD2BC3-5C75-4C7B-869A-182B4227DC7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FOS_Utils</RootNamespace>
+    <AssemblyName>FOS-Utils</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CodeName.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCalendarCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCalendarColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCalendarEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FCellTypes.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCheckBoxCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCheckBoxColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCheckBoxEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FComboboCodeNameColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FComboBoxCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FComboboxCodeNameCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FComboboxCodeNameEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FComboBoxColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FComboBoxEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FCustomCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCustomColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FCustomEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FDateTimeCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FDateTimeColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FDateTimeEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FHourMinuteCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FHourMinuteColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FHourMinuteEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FInputControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FInputControl.Designer.cs">
+      <DependentUpon>FInputControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FNumberCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FNumberColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FNumberEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FTextBoxCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FTextBoxColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FTextBoxEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridViewEditingColumns\FTimeCell.cs" />
+    <Compile Include="DataGridViewEditingColumns\FTimeColumn.cs" />
+    <Compile Include="DataGridViewEditingColumns\FTimeEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FLabelLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Interfaces\IControl.cs" />
+    <Compile Include="Interfaces\IDataGridViewKeyProcess.cs" />
+    <Compile Include="FButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FCheckedListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FDate.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FErrorProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FMaskedTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FNumber.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FNumberTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FStatusStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FYearMonth.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataGridViewEditingColumns\FInputControl.resx">
+      <DependentUpon>FInputControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FNumberTextBox.resx">
+      <DependentUpon>FNumberTextBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
