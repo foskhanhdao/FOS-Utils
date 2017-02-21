@@ -26,7 +26,7 @@ namespace FOS_Utils.PDF.PDFLib
         //tong so dong detail co trong mot trang
         private static int MaxRow = 0;
         //tap hop cac duong thang trong mot trang Pdf
-        private static List<FosLine> lsLine = new List<FosLine>();
+        //private static List<FosLine> lsLine = new List<FosLine>();
         #endregion
         #region ComonFun
         /// <summary>
@@ -173,6 +173,17 @@ namespace FOS_Utils.PDF.PDFLib
             lbDest.BorderStyle = lbSource.BorderStyle;
             lbDest.FPdfProperties.TableRow = row;
             lbDest.FPdfProperties.TableColumn = lbSource.FPdfProperties.TableColumn;
+            lbDest.IsShowLineTop = lbSource.IsShowLineTop;
+            lbDest.LineStyleTop = lbSource.LineStyleTop;
+
+            lbDest.IsShowLineBottom = lbSource.IsShowLineBottom;
+            lbDest.LineStyleBottom = lbSource.LineStyleBottom;
+
+            lbDest.IsShowLineRight = lbSource.IsShowLineRight;
+            lbDest.LineStyleRight = lbSource.LineStyleRight;
+
+            lbDest.IsShowLineLeft = lbSource.IsShowLineLeft;
+            lbDest.LineStyleLeft = lbSource.LineStyleLeft;
         }
         /// <summary>
         /// Lay du lieu cho textbox dua vao DataSource cua Detail
@@ -228,25 +239,25 @@ namespace FOS_Utils.PDF.PDFLib
             line1.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y);
             line1.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y);
             if (CurPage == 1)
-                lsLine.Add(line1);
+                PrintPdfLine(line1, page);
 
             FosLine line2 = new FosLine();
             line2.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y + ct.Height);
             line2.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y + ct.Height);
             if (CurPage == 1)
-                lsLine.Add(line2);
+                PrintPdfLine(line2, page);
 
             FosLine line3 = new FosLine();
             line3.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y);
             line3.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y + ct.Height);
             if (CurPage == 1)
-                lsLine.Add(line3);
+                PrintPdfLine(line3, page);
 
             FosLine line4 = new FosLine();
             line4.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y);
             line4.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y + ct.Height);
             if (CurPage == 1)
-                lsLine.Add(line4);
+                PrintPdfLine(line4, page);
 
         }
         public static void PrintBorderLabel(FPdfLabel tb, PagePdf page, FosPoint rootPoint)
@@ -261,7 +272,8 @@ namespace FOS_Utils.PDF.PDFLib
                     lineTop.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    lsLine.Add(lineTop);
+                    PrintPdfLine(lineTop, page);
+                    //lsLine.Add(lineTop);
             }
             if (tb.IsShowLineBottom)
             {
@@ -273,7 +285,7 @@ namespace FOS_Utils.PDF.PDFLib
                     lineBottom.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    lsLine.Add(lineBottom);
+                    PrintPdfLine(lineBottom, page);
             }
             if (tb.IsShowLineLeft)
             {
@@ -285,7 +297,7 @@ namespace FOS_Utils.PDF.PDFLib
                     lineLeft.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    lsLine.Add(lineLeft);
+                    PrintPdfLine(lineLeft, page);
             }
             if (tb.IsShowLineRight)
             {
@@ -297,7 +309,7 @@ namespace FOS_Utils.PDF.PDFLib
                     lineRight.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    lsLine.Add(lineRight);
+                    PrintPdfLine(lineRight, page);
             }
         }
         #endregion
@@ -362,10 +374,10 @@ namespace FOS_Utils.PDF.PDFLib
                     // In het cac control trong trang
                     PrintAllControl(panel, pagePdf, CurPage, new FosPoint(0, 0));
                     //In het cac line trong trang
-                    foreach (FosLine line in lsLine)
-                    {
-                        PrintPdfLine(line, pagePdf);
-                    }
+                    //foreach (FosLine line in lsLine)
+                    //{
+                    //    PrintPdfLine(line, pagePdf);
+                    //}
                     //Neu khong phai trang cuoi thi tao moi trang de in tiep
                     if (i != NumberPage)
                     {
@@ -396,7 +408,7 @@ namespace FOS_Utils.PDF.PDFLib
                         lineNew.PointStart.YPoint = rootPoint.YPoint + line.PointStart.YPoint;
                         lineNew.PointDest.XPoint = rootPoint.XPoint + line.PointDest.XPoint;
                         lineNew.PointDest.YPoint = rootPoint.YPoint + line.PointDest.YPoint;
-                        lsLine.Add(lineNew);
+                        PrintPdfLine(lineNew, page);
                     }
                 }
             }
@@ -493,11 +505,14 @@ namespace FOS_Utils.PDF.PDFLib
         /// <param name="curPage"></param>
         public static void PrintPdfString(FPdfLabel FPdfLabel, PagePdf page, FosPoint rootPoint, int curPage)
         {
-            //inborder
-
+            //Inborder
             PrintBorderLabel(FPdfLabel, page, rootPoint);
+            //InBackColor
+            PrintBackColor(FPdfLabel, page, rootPoint);
+            //return;
             //khoi tao bien de in text  
             PdfContentByte cb = writer.DirectContent;
+            cb.SaveState();
             BaseFont bf;
             if (FPdfLabel.Font.Italic)
             {
@@ -536,6 +551,7 @@ namespace FOS_Utils.PDF.PDFLib
             cb.BeginText();
             cb.ShowTextAligned(0, text, point.XPoint, point.YPoint, FPdfLabel.FPdfProperties.Rotation);
             cb.EndText();
+            cb.RestoreState();
 
         }
         /// <summary>
@@ -546,6 +562,7 @@ namespace FOS_Utils.PDF.PDFLib
         public static void PrintPdfLine(FosLine line, PagePdf page)
         {
             PdfContentByte cb = writer.DirectContent;
+            cb.SaveState();
             //canh chinh lai toa do cho phu hop
             //covan de
             PdfHelper.ConvertToPointPdf(line.PointStart, page);
@@ -564,9 +581,10 @@ namespace FOS_Utils.PDF.PDFLib
             cb.MoveTo(line.PointStart.XPoint, line.PointStart.YPoint);
             cb.LineTo(line.PointDest.XPoint, line.PointDest.YPoint);
             cb.Stroke();
+            cb.RestoreState();
             //sau khi ve xong phai tra lai toa do de ve lai trang khac
-            PdfHelper.ConvertToPointPdf(line.PointStart, page);
-            PdfHelper.ConvertToPointPdf(line.PointDest, page);
+            //PdfHelper.ConvertToPointPdf(line.PointStart, page);
+            //PdfHelper.ConvertToPointPdf(line.PointDest, page);
         }
         /// <summary>
         /// In mot picturebox tren form ra mot hinh anh tren file Pdf
@@ -581,13 +599,32 @@ namespace FOS_Utils.PDF.PDFLib
             //xet toa do, goc toa do la goc phan |_
             FosPoint point = new FosPoint(pB.Location.X + rootPoint.XPoint, pB.Location.Y + pB.Size.Height + rootPoint.YPoint);
             PdfHelper.ConvertToPointPdf(point, page);
-
             logo.SetAbsolutePosition(point.XPoint, point.YPoint);
             //xet kich thuoc
             logo.ScaleAbsoluteHeight(pB.Size.Height);
             logo.ScaleAbsoluteWidth(pB.Size.Width);
             doc.Add(logo);
         }        
+        /// <summary>
+        /// In BackColor cho control
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <param name="page"></param>
+        /// <param name="rootPoint"></param>
+        public static void PrintBackColor(Control ct,PagePdf page, FosPoint rootPoint)
+        {
+            PdfContentByte over = writer.DirectContent;
+            BaseColor bc = new BaseColor(ct.BackColor);
+            over.SaveState();
+            FosPoint point = new FosPoint(ct.Location.X , ct.Location.Y + ct.Height);
+            point.XPoint += rootPoint.XPoint;
+            point.YPoint += rootPoint.YPoint;
+            PdfHelper.ConvertToPointPdf(point, page);              
+            over.Rectangle(point.XPoint, point.YPoint , ct.Width, ct.Height);
+            over.SetColorFill(bc);
+            over.Fill();
+            over.RestoreState();
+        }
         #endregion
     }
 }

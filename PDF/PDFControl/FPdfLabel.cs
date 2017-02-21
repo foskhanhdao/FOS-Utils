@@ -8,6 +8,10 @@ namespace FOS_Utils.PDF.PDFControl
 {
     public class FPdfLabel : FLabelLine
     {
+        public FPdfLabel()
+        {
+            this.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        }
         FPdfProperties fPdfProperties = new FPdfProperties();
 
         public FPdfProperties FPdfProperties
