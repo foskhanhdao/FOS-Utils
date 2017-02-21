@@ -143,27 +143,17 @@ namespace FOS_Utils.PDF.PDFLib
         /// <param name="panel"></param>
         public static void DrawAllDetail(FPdfPanel panel)
         {
-            foreach (Control c in panel.Controls)
+            if(panel.pnDetail!=null)
             {
-                if (c is FPdfPanel && (c as FPdfPanel).MaxRow>1)
+                FPdfPanel detail = panel.pnDetail;               
+                for (int i = 1; i < detail.MaxRow; i++)
                 {
-                    FPdfPanel detail = c as FPdfPanel;
-                    if (detail.DataSource != null)
-                    {
-                        NumberPage = detail.DataSource.Rows.Count / detail.MaxRow;
-                        if ((detail.DataSource.Rows.Count % detail.MaxRow) != 0)
-                            NumberPage++;
-                        MaxRow = detail.MaxRow;
-                    }
-                    for (int i = 1; i < detail.MaxRow; i++)
-                    {
-                        FPdfPanel detailCoppy = new FPdfPanel();
-                        Point locationDetail = new Point(detail.Location.X, detail.Location.Y + (detail.Size.Height * i));
-                        detailCoppy.Location = locationDetail;
-                        CoppyFPFPanelDetail(detail, detailCoppy, i);
-                        panel.Controls.Add(detailCoppy);
-                    }
-                }
+                    FPdfPanel detailCoppy = new FPdfPanel();
+                    Point locationDetail = new Point(detail.Location.X, detail.Location.Y + (detail.Size.Height * i));
+                    detailCoppy.Location = locationDetail;
+                    CoppyFPFPanelDetail(detail, detailCoppy, i);
+                    detail.Parent.Controls.Add(detailCoppy);
+                }                
             }
         }
         public static void CoppyFPFPanelDetail(FPdfPanel panelSource, FPdfPanel panelDest, int row)
@@ -181,12 +171,14 @@ namespace FOS_Utils.PDF.PDFLib
                     FPdfText tb = new FPdfText();
                     CopyFPdfText(ct as FPdfText, tb, row);
                     panelDest.Controls.Add(tb);
+                    panelDest.RaiseAddControlEvent(tb);
                 }
                 else if (ct is FPdfLabel)
                 {
                     FPdfLabel lb = new FPdfLabel();
                     CopyFPdfLabel(ct as FPdfLabel, lb, row);
                     panelDest.Controls.Add(lb);
+                    panelDest.RaiseAddControlEvent(lb);
                 }
             }
         }
@@ -203,11 +195,11 @@ namespace FOS_Utils.PDF.PDFLib
         }
         public static void CopyFPdfLabel(FPdfLabel lbSource, FPdfLabel lbDest, int row)
         {
-            lbDest.Size = lbDest.Size;
+            lbDest.Size = lbSource.Size;
             lbDest.Font = lbSource.Font;
             lbDest.Location = lbSource.Location;
             lbDest.TextAlign = lbSource.TextAlign;
-            //lbDest.Text = lbSource.Text;
+            lbDest.Text = lbSource.Text;
             lbDest.BorderStyle = lbSource.BorderStyle;
             lbDest.FPdfProperties.TableRow = row;
             lbDest.FPdfProperties.TableColumn = lbSource.FPdfProperties.TableColumn;
@@ -403,8 +395,14 @@ namespace FOS_Utils.PDF.PDFLib
         {
             if (doc != null)
             {
-                //Ve het cac detail de co mot trang mau hoan chinh
-                DrawAllDetail(panel);
+                if(panel.pnDetail!=null&&panel.pnDetail.DataSource!=null)
+                {
+                    FPdfPanel detail = panel.pnDetail;
+                    NumberPage = detail.DataSource.Rows.Count / detail.MaxRow;
+                    if ((detail.DataSource.Rows.Count % detail.MaxRow) != 0)
+                        NumberPage++;
+                    MaxRow = detail.MaxRow;
+                }
                 for (int i = 1; i <= NumberPage; i++)
                 {
                     // moi vong lap la in mot trang Pdf
@@ -633,15 +631,22 @@ namespace FOS_Utils.PDF.PDFLib
         public static void PrinPdfImage(PictureBox pB, PagePdf page, FosPoint rootPoint)
         {
             BaseColor bc = new BaseColor(255, 255, 255);
-            var logo = iTextSharp.text.Image.GetInstance(pB.Image, bc);
-            //xet toa do, goc toa do la goc phan |_
-            FosPoint point = new FosPoint(pB.Location.X + rootPoint.XPoint, pB.Location.Y + pB.Size.Height + rootPoint.YPoint);
-            PdfHelper.ConvertToPointPdf(point, page);
-            logo.SetAbsolutePosition(point.XPoint, point.YPoint);
-            //xet kich thuoc
-            logo.ScaleAbsoluteHeight(pB.Size.Height);
-            logo.ScaleAbsoluteWidth(pB.Size.Width);
-            doc.Add(logo);
+            try
+            {
+                var logo = iTextSharp.text.Image.GetInstance(pB.Image, bc);
+                //xet toa do, goc toa do la goc phan |_
+                FosPoint point = new FosPoint(pB.Location.X + rootPoint.XPoint, pB.Location.Y + pB.Size.Height + rootPoint.YPoint);
+                PdfHelper.ConvertToPointPdf(point, page);
+                logo.SetAbsolutePosition(point.XPoint, point.YPoint);
+                //xet kich thuoc
+                logo.ScaleAbsoluteHeight(pB.Size.Height);
+                logo.ScaleAbsoluteWidth(pB.Size.Width);
+                doc.Add(logo);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }        
         /// <summary>
         /// In BackColor cho control

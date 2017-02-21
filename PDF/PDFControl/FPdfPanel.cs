@@ -23,6 +23,10 @@ namespace FOS_Utils.PDF.PDFControl
         public List<FosLine> lsPdfLine = new List<FosLine>();
         //du lieu di kem voi detail
         public DataTable DataSource = null;
+        //PanelDetail
+        public FPdfPanel pnDetail;
+
+        
         //event
         public event AddControl AddControlEx;
         #endregion
@@ -44,6 +48,11 @@ namespace FOS_Utils.PDF.PDFControl
         {
             get { return maxRow; }
             set { maxRow = value; }
+        }
+        public FPdfPanel PnDetail
+        {
+            get { return pnDetail; }
+            set { pnDetail = value; }
         }
         #endregion
         #region Contructer
