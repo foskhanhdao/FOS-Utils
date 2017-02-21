@@ -24,9 +24,7 @@ namespace FOS_Utils.PDF.PDFLib
         //trang Pdf hien tai
         private static int CurPage = 1;
         //tong so dong detail co trong mot trang
-        private static int MaxRow = 0;
-        //tap hop cac duong thang trong mot trang Pdf
-        //private static List<FosLine> lsLine = new List<FosLine>();
+        private static int MaxRow = 0;        
         #endregion
         #region ComonFun
         /// <summary>
@@ -39,17 +37,51 @@ namespace FOS_Utils.PDF.PDFLib
             point.YPoint = page.Height - point.YPoint;
         }
         /// <summary>
-        /// Tu label hoac textbox lay ra toa do de in text (Khong dung cho panel)
+        /// Tu textbox lay ra toa do de in text 
         /// </summary>
         /// <param name="control"></param>
         /// <returns></returns>
-        public static FosPoint CreatePointFromControl(Control control)
+        public static FosPoint CreatePointFromControl(FPdfText textbox)
         {
-            int height = control.Size.Height;
-            int size = (int)control.Font.Size;
-            int xPoint = control.Location.X + 4;
-            //int yPoint = control.Location.Y + 6 + size;
-            int yPoint = control.Location.Y + size + (control.Size.Height-size)/2;
+            int height = textbox.Size.Height;
+            int size = (int)textbox.Font.Size;
+            int xPoint = textbox.Location.X + 4;
+            int yPoint = textbox.Location.Y + size + (textbox.Size.Height - size) / 2;
+            FosPoint point = new FosPoint(xPoint, yPoint);
+            return point;
+        }
+        /// <summary>
+        /// Tu Label lay ra toa do de in text 
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
+        public static FosPoint CreatePointFromLabel(FPdfLabel label)
+        {
+            int height = label.Size.Height;
+            int size = (int)label.Font.Size;
+            int xPoint = label.Location.X + 4;
+            int yPoint = 0;           
+            //center
+            if (label.TextAlign == ContentAlignment.MiddleLeft ||
+                label.TextAlign == ContentAlignment.MiddleCenter ||
+                label.TextAlign == ContentAlignment.MiddleRight)
+            {
+                yPoint = label.Location.Y + size + (label.Size.Height - size) / 2;
+            }
+            //top
+            if (label.TextAlign == ContentAlignment.TopLeft ||
+                label.TextAlign == ContentAlignment.TopCenter ||
+                label.TextAlign == ContentAlignment.TopRight)
+            {
+                yPoint = label.Location.Y + size;
+            }
+            ////bottom
+            if (label.TextAlign == ContentAlignment.BottomLeft ||
+                label.TextAlign == ContentAlignment.BottomCenter ||
+                label.TextAlign == ContentAlignment.BottomRight)
+            {
+                yPoint = label.Location.Y + label.Size.Height;
+            }
             FosPoint point = new FosPoint(xPoint, yPoint);
             return point;
         }
@@ -91,11 +123,15 @@ namespace FOS_Utils.PDF.PDFLib
                 SizeF stringSize = Graphics.FromImage(tempImage).MeasureString(lb.Text, lb.Font);
                 align = width - stringSize.Width;
             }
-            if (lb.TextAlign == ContentAlignment.MiddleCenter)
+            if (lb.TextAlign == ContentAlignment.TopCenter||
+                lb.TextAlign == ContentAlignment.MiddleCenter||
+                lb.TextAlign == ContentAlignment.BottomCenter)
             {
                 align = align / 2;
             }
-            if (lb.TextAlign == ContentAlignment.MiddleLeft)
+            if (lb.TextAlign == ContentAlignment.TopLeft||
+                lb.TextAlign == ContentAlignment.MiddleLeft||
+                lb.TextAlign == ContentAlignment.BottomLeft)
             {
                 align = 0;
             }
@@ -136,6 +172,8 @@ namespace FOS_Utils.PDF.PDFLib
             panelDest.DataSource = panelSource.DataSource;
             panelDest.lsPdfLine = panelSource.lsPdfLine;
             panelDest.BorderStyle = panelSource.BorderStyle;
+            //panelDest.AddControlEx += new AddControl(  panelSource.AddControlEx);
+            panelSource.CoppyAddEvent(panelDest);
             foreach (Control ct in panelSource.Controls)
             {
                 if (ct is FPdfText)
@@ -159,7 +197,7 @@ namespace FOS_Utils.PDF.PDFLib
             tbDest.Location = tbSource.Location;
             tbDest.TextAlign = tbSource.TextAlign;
             tbDest.BorderStyle = tbSource.BorderStyle;
-            tbDest.Text = tbSource.Text;
+            //tbDest.Text = tbSource.Text;
             tbDest.FPdfProperties.TableRow = row;
             tbDest.FPdfProperties.TableColumn = tbSource.FPdfProperties.TableColumn;
         }
@@ -169,7 +207,7 @@ namespace FOS_Utils.PDF.PDFLib
             lbDest.Font = lbSource.Font;
             lbDest.Location = lbSource.Location;
             lbDest.TextAlign = lbSource.TextAlign;
-            lbDest.Text = lbSource.Text;
+            //lbDest.Text = lbSource.Text;
             lbDest.BorderStyle = lbSource.BorderStyle;
             lbDest.FPdfProperties.TableRow = row;
             lbDest.FPdfProperties.TableColumn = lbSource.FPdfProperties.TableColumn;
@@ -537,7 +575,7 @@ namespace FOS_Utils.PDF.PDFLib
             }
 
             // tao bien tao do
-            FosPoint point = CreatePointFromControl(FPdfLabel);
+            FosPoint point = CreatePointFromLabel(FPdfLabel);
             // Tuy vao control cha la gi ma chinh lai toa do
             point.XPoint += rootPoint.XPoint;
             point.YPoint += rootPoint.YPoint;

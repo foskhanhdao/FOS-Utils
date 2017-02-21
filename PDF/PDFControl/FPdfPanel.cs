@@ -11,6 +11,7 @@ using System.Drawing;
 
 namespace FOS_Utils.PDF.PDFControl
 {
+    public delegate void AddControl(Control ct);
     public class FPdfPanel : Panel
     {
         #region Variable
@@ -22,6 +23,8 @@ namespace FOS_Utils.PDF.PDFControl
         public List<FosLine> lsPdfLine = new List<FosLine>();
         //du lieu di kem voi detail
         public DataTable DataSource = null;
+        //event
+        public event AddControl AddControlEx;
         #endregion
         #region Field
         public PageType PageType
@@ -67,7 +70,20 @@ namespace FOS_Utils.PDF.PDFControl
                     base.Size = new System.Drawing.Size(50, 50);
                     break;
             }
-        }        
+        }
+
+        public void RaiseAddControlEvent(Control ct)
+        {
+            if (AddControlEx != null)
+            {
+                AddControlEx(ct);
+                
+            }
+        }
+        public void CoppyAddEvent(FPdfPanel panelCoppy)
+        {
+            panelCoppy.AddControlEx = this.AddControlEx;
+        }
         #endregion
         #region Override
         protected override void OnResize(EventArgs eventargs)
