@@ -137,6 +137,12 @@ namespace FOS_Utils.PDF.PDFLib
             {
                 align = 0;
             }
+            if (lb.TextAlign == ContentAlignment.TopRight ||
+                lb.TextAlign == ContentAlignment.MiddleRight ||
+                lb.TextAlign == ContentAlignment.BottomRight)
+            {
+                align = align - 4;
+            }
             return (int)Math.Round(align, MidpointRounding.AwayFromZero);
         }
         /// <summary>
@@ -638,8 +644,8 @@ namespace FOS_Utils.PDF.PDFLib
             cb.Stroke();
             cb.RestoreState();
             //sau khi ve xong phai tra lai toa do de ve lai trang khac
-            //PdfHelper.ConvertToPointPdf(line.PointStart, page);
-            //PdfHelper.ConvertToPointPdf(line.PointDest, page);
+            PdfHelper.ConvertToPointPdf(line.PointStart, page);
+            PdfHelper.ConvertToPointPdf(line.PointDest, page);
         }
         /// <summary>
         /// In mot picturebox tren form ra mot hinh anh tren file Pdf
@@ -675,6 +681,8 @@ namespace FOS_Utils.PDF.PDFLib
         /// <param name="rootPoint"></param>
         public static void PrintBackColor(Control ct,PagePdf page, FosPoint rootPoint)
         {
+            if (ct.BackColor == Color.White||ct.BackColor==Color.Transparent)
+                return;
             PdfContentByte over = writer.DirectContent;
             BaseColor bc = new BaseColor(ct.BackColor);
             over.SaveState();
