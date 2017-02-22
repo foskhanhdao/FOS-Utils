@@ -24,7 +24,9 @@ namespace FOS_Utils.PDF.PDFLib
         //trang Pdf hien tai
         private static int CurPage = 1;
         //tong so dong detail co trong mot trang
-        private static int MaxRow = 0;        
+        private static int MaxRow = 0; 
+        //Tong hop tat ca cac line trong trang
+        private static List<FosLine> lsLineInpage = new List<FosLine>();
         #endregion
         #region ComonFun
         /// <summary>
@@ -189,6 +191,7 @@ namespace FOS_Utils.PDF.PDFLib
             tbDest.Location = tbSource.Location;
             tbDest.TextAlign = tbSource.TextAlign;
             tbDest.BorderStyle = tbSource.BorderStyle;
+            tbDest.BackColor = tbSource.BackColor;
             //tbDest.Text = tbSource.Text;
             tbDest.FPdfProperties.TableRow = row;
             tbDest.FPdfProperties.TableColumn = tbSource.FPdfProperties.TableColumn;
@@ -199,8 +202,9 @@ namespace FOS_Utils.PDF.PDFLib
             lbDest.Font = lbSource.Font;
             lbDest.Location = lbSource.Location;
             lbDest.TextAlign = lbSource.TextAlign;
-            lbDest.Text = lbSource.Text;
+            //lbDest.Text = lbSource.Text;
             lbDest.BorderStyle = lbSource.BorderStyle;
+            lbDest.BackColor = lbSource.BackColor;
             lbDest.FPdfProperties.TableRow = row;
             lbDest.FPdfProperties.TableColumn = lbSource.FPdfProperties.TableColumn;
             lbDest.IsShowLineTop = lbSource.IsShowLineTop;
@@ -269,27 +273,33 @@ namespace FOS_Utils.PDF.PDFLib
             line1.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y);
             line1.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y);
             if (CurPage == 1)
-                PrintPdfLine(line1, page);
+                lsLineInpage.Add(line1);
 
             FosLine line2 = new FosLine();
             line2.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y + ct.Height);
             line2.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y + ct.Height);
             if (CurPage == 1)
-                PrintPdfLine(line2, page);
+                lsLineInpage.Add(line2);
 
             FosLine line3 = new FosLine();
             line3.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y);
             line3.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X, rootPoint.YPoint + ct.Location.Y + ct.Height);
             if (CurPage == 1)
-                PrintPdfLine(line3, page);
+                lsLineInpage.Add(line3);
 
             FosLine line4 = new FosLine();
             line4.PointStart = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y);
             line4.PointDest = new FosPoint(rootPoint.XPoint + ct.Location.X + ct.Width, rootPoint.YPoint + ct.Location.Y + ct.Height);
             if (CurPage == 1)
-                PrintPdfLine(line4, page);
+                lsLineInpage.Add(line4);
 
         }
+        /// <summary>
+        /// In border cho label
+        /// </summary>
+        /// <param name="tb"></param>
+        /// <param name="page"></param>
+        /// <param name="rootPoint"></param>
         public static void PrintBorderLabel(FPdfLabel tb, PagePdf page, FosPoint rootPoint)
         {
             if (tb.IsShowLineTop)
@@ -302,8 +312,7 @@ namespace FOS_Utils.PDF.PDFLib
                     lineTop.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    PrintPdfLine(lineTop, page);
-                    //lsLine.Add(lineTop);
+                    lsLineInpage.Add(lineTop);
             }
             if (tb.IsShowLineBottom)
             {
@@ -315,7 +324,7 @@ namespace FOS_Utils.PDF.PDFLib
                     lineBottom.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    PrintPdfLine(lineBottom, page);
+                    lsLineInpage.Add(lineBottom); 
             }
             if (tb.IsShowLineLeft)
             {
@@ -327,7 +336,7 @@ namespace FOS_Utils.PDF.PDFLib
                     lineLeft.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    PrintPdfLine(lineLeft, page);
+                    lsLineInpage.Add(lineLeft); 
             }
             if (tb.IsShowLineRight)
             {
@@ -339,7 +348,7 @@ namespace FOS_Utils.PDF.PDFLib
                     lineRight.LineStyle = LineStyle.Dot;
                 }
                 if (CurPage == 1)
-                    PrintPdfLine(lineRight, page);
+                    lsLineInpage.Add(lineRight); 
             }
         }
         #endregion
@@ -379,6 +388,8 @@ namespace FOS_Utils.PDF.PDFLib
                 writer = null;
                 NumberPage = 1;
                 MaxRow = 0;
+                CurPage = 1;
+                lsLineInpage = new List<FosLine>();
             }
         }
         /// <summary>
@@ -409,11 +420,11 @@ namespace FOS_Utils.PDF.PDFLib
                     CurPage = i;
                     // In het cac control trong trang
                     PrintAllControl(panel, pagePdf, CurPage, new FosPoint(0, 0));
-                    //In het cac line trong trang
-                    //foreach (FosLine line in lsLine)
-                    //{
-                    //    PrintPdfLine(line, pagePdf);
-                    //}
+                    //In het cac line trong trang sau cung
+                    foreach (FosLine line in lsLineInpage)
+                    {
+                        PrintPdfLine(line, pagePdf);
+                    }
                     //Neu khong phai trang cuoi thi tao moi trang de in tiep
                     if (i != NumberPage)
                     {
@@ -432,7 +443,7 @@ namespace FOS_Utils.PDF.PDFLib
         /// <param name="rootPoint"></param>
         public static void PrintAllControl(FPdfPanel panel, PagePdf page, int curPage, FosPoint rootPoint)
         {
-            //in line
+            //Add line
             if (panel.lsPdfLine.Count > 0)
             {
                 foreach (FosLine line in panel.lsPdfLine)
@@ -444,19 +455,23 @@ namespace FOS_Utils.PDF.PDFLib
                         lineNew.PointStart.YPoint = rootPoint.YPoint + line.PointStart.YPoint;
                         lineNew.PointDest.XPoint = rootPoint.XPoint + line.PointDest.XPoint;
                         lineNew.PointDest.YPoint = rootPoint.YPoint + line.PointDest.YPoint;
-                        PrintPdfLine(lineNew, page);
+                        lsLineInpage.Add(lineNew);
                     }
                 }
             }
+            // In hinh dau tien
             foreach (Control c in panel.Controls)
             {
-                //in hinh
+                
                 if (c is PictureBox)
                 {
                     PictureBox pB = c as PictureBox;
                     PrinPdfImage(pB, page, rootPoint);
                 }
-                //in chu
+            }
+            //Sau do in chu
+            foreach (Control c in panel.Controls)
+            {                
                 if (c is FPdfText)
                 {
                     FPdfText FPdfText = c as FPdfText;
@@ -525,6 +540,8 @@ namespace FOS_Utils.PDF.PDFLib
             //Lay du lieu cua dataSource bo vao text
             GetDataFPdfText(FPdfText, curPage);
             string text = FPdfText.Text;
+            //if (text.Trim() == "")
+            //    return;
             //canh lai center hoac right
             point.XPoint += AlignforFPdfText(FPdfText as FPdfText);
             cb.BeginText();
@@ -582,6 +599,8 @@ namespace FOS_Utils.PDF.PDFLib
             //Lay du lieu cua dataSource bo vao text
             GetDataFPdfLabel(FPdfLabel, curPage);
             string text = FPdfLabel.Text;
+            //if (text.Trim() == "")
+            //    return;
             //canh lai center hoac right
             point.XPoint += AlignforFPdfLabel(FPdfLabel as FPdfLabel);
             cb.BeginText();
