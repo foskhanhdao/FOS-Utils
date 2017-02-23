@@ -194,6 +194,7 @@
     <Compile Include="PDF\PDFLib\FosPoint.cs" />
     <Compile Include="PDF\PDFLib\PagePdf.cs" />
     <Compile Include="PDF\PDFLib\PdfHelper.cs" />
+    <Compile Include="PDF\PDFLib\PrintHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>

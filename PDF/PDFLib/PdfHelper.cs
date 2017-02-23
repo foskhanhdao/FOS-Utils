@@ -568,7 +568,7 @@ namespace FOS_Utils.PDF.PDFLib
             PrintBorderLabel(FPdfLabel, page, rootPoint);
             //InBackColor
             PrintBackColor(FPdfLabel, page, rootPoint);
-            //return;
+            
             //khoi tao bien de in text  
             PdfContentByte cb = writer.DirectContent;
             cb.SaveState();
