@@ -425,7 +425,7 @@ namespace FOS_Utils.PDF.PDFLib
                     // moi vong lap la in mot trang Pdf
                     CurPage = i;
                     // In het cac control trong trang
-                    PrintAllControl(panel, pagePdf, CurPage, new FosPoint(0, 0));
+                    PrintAllControlInPanel(panel, pagePdf, CurPage, new FosPoint(0, 0));
                     //In het cac line trong trang sau cung
                     foreach (FosLine line in lsLineInpage)
                     {
@@ -447,7 +447,7 @@ namespace FOS_Utils.PDF.PDFLib
         /// <param name="page"></param>
         /// <param name="curPage"></param>
         /// <param name="rootPoint"></param>
-        public static void PrintAllControl(FPdfPanel panel, PagePdf page, int curPage, FosPoint rootPoint)
+        public static void PrintAllControlInPanel(FPdfPanel panel, PagePdf page, int curPage, FosPoint rootPoint)
         {
             //Add line
             if (panel.lsPdfLine.Count > 0)
@@ -495,7 +495,7 @@ namespace FOS_Utils.PDF.PDFLib
                     //inborder
                     if (FPdfPanelChirld.BorderStyle == BorderStyle.FixedSingle)
                         PrintBorderForControl(FPdfPanelChirld, page, rootPoint);
-                    PrintAllControl(FPdfPanelChirld, page, curPage, new FosPoint(rootPoint.XPoint + FPdfPanelChirld.Location.X, rootPoint.YPoint + FPdfPanelChirld.Location.Y));
+                    PrintAllControlInPanel(FPdfPanelChirld, page, curPage, new FosPoint(rootPoint.XPoint + FPdfPanelChirld.Location.X, rootPoint.YPoint + FPdfPanelChirld.Location.Y));
                 }
             }
         }
