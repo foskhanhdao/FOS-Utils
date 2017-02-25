@@ -27,6 +27,10 @@ namespace FOS_Utils.PDF.PDFLib
         private static List<FosLine> lsLineInpage = new List<FosLine>();
         #endregion
         #region FunPrint
+        /// <summary>
+        /// Bat dau in Document
+        /// </summary>
+        /// <param name="panelMain"></param>
         public static void BeginPrint(FPdfPanel panelMain)
         {
 
@@ -40,24 +44,54 @@ namespace FOS_Utils.PDF.PDFLib
                         NumberPage++;
                     MaxRow = detail.MaxRow;
                 }
-                doc = new PrintDocument();
-                //PaperSize ps = new PaperSize();
-                //ps.RawKind = (int)PaperKind.A4;
-                //doc.DefaultPageSettings.PaperSize = ps;
+                PanelMain = panelMain;
+                PaperSize pageSize = new PaperSize("PaperA4", panelMain.Size.Width, panelMain.Size.Height);                
+                doc = new PrintDocument();                
+                doc.DefaultPageSettings.PaperSize = pageSize;
                 //doc.DefaultPageSettings.Landscape = true;
                 doc.PrintPage += new PrintPageEventHandler(On_PrintPage);
-                PanelMain = panelMain;
-                //doc.Print();
+                
+             
                 prDialog = new PrintPreviewDialog();
                 prDialog.Document = doc;
                 prDialog.Width = Screen.PrimaryScreen.WorkingArea.Width;
                 prDialog.Height = Screen.PrimaryScreen.WorkingArea.Height;
-                prDialog.Document.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("PaperA4", 595, 842);
-
+               
+            }
+        }
+        public static void ViewBeforPrint()
+        {
+            if (doc != null && prDialog != null)
+            {
                 prDialog.ShowDialog();
+            }
+        }
+        public static void Print()
+        {
+            if (doc != null)
+            {
+                doc.Print();
                 doc.Dispose();
             }
         }
+        /// <summary>
+        /// Sau khi in xong goi ham nay de reset lai cac bien dung de in lan sau
+        /// </summary>
+        public static void EndPrint()
+        {
+            doc = null;
+            prDialog = null;
+            FPdfPanel PanelMain = null;
+            NumberPage = 1;
+            CurPage = 1;
+            MaxRow = 0;
+            lsLineInpage = new List<FosLine>();
+        }
+        /// <summary>
+        /// Su kien In, dung de ve cac control len trang Document
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="ev"></param>
         private static void On_PrintPage(object sender, PrintPageEventArgs ev)
         {
 
@@ -84,9 +118,7 @@ namespace FOS_Utils.PDF.PDFLib
 
             }
             
-        }
-
-         
+        }         
         /// <summary>
         /// In tat ca cac control co trong Panel
         /// </summary>
@@ -205,6 +237,12 @@ namespace FOS_Utils.PDF.PDFLib
                 Console.WriteLine(ex.ToString()); 
             }
         }
+        /// <summary>
+        /// In Backcolor cho Label
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="FPdfLabel"></param>
+        /// <param name="rootPoint"></param>
         public static void PrintBackColor(Graphics g,FPdfLabel FPdfLabel, FosPoint rootPoint)
         {
             if (FPdfLabel.BackColor == Color.White || FPdfLabel.BackColor == Color.Transparent)
