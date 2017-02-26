@@ -51,8 +51,8 @@ namespace FOS_Utils.PDF.PDFLib
             switch (pageType)
             {
                 case PageType.A4:
-                    this.with = 595;
-                    this.height = 842;
+                    this.with = 800;
+                    this.height = 1100;
                     break;
                 case PageType.A3:
                     this.with = 100;

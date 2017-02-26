@@ -373,7 +373,7 @@ namespace FOS_Utils.PDF.PDFLib
                 switch (pagePdf.PageType)
                 {
                     case PageType.A4:
-                        doc.SetPageSize(new iTextSharp.text.Rectangle(PageSize.A4));
+                        doc.SetPageSize(new iTextSharp.text.Rectangle(800,1100));
                         break;
                     case PageType.A3:
                         doc.SetPageSize(new iTextSharp.text.Rectangle(PageSize.A3));
